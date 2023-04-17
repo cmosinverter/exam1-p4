@@ -14,23 +14,7 @@ SobelFilter::~SobelFilter() = default;
 
 void SobelFilter::do_filter() {
   while (true) {
-    for (unsigned int i = 0; i < MASK_N; ++i) {
-      val[i] = 0;
-    }
-    for (unsigned int v = 0; v < MASK_Y; ++v) {
-      for (unsigned int u = 0; u < MASK_X; ++u) {
-        unsigned char grey = (i_r.read() + i_g.read() + i_b.read()) / 3;
-        for (unsigned int i = 0; i != MASK_N; ++i) {
-          val[i] += grey * mask[i][u][v];
-        }
-      }
-    }
-    double total = 0;
-    for (unsigned int i = 0; i != MASK_N; ++i) {
-      total += val[i] * val[i];
-    }
-    int result = static_cast<int>(std::sqrt(total));
-    o_result.write(result);
+    sum = i_data[0]*(1.0/6.0) + i_data[1]*(1.0/3.0) + i_data[2]*(1.0/2.0);
   }
 }
 
